@@ -11,10 +11,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-string connectionString = "User Id=postgres;Password=yasuomonodedo;Server=db.oeilqxqiyuauqqyajmzt.supabase.co;Port=5432;Database=postgres";
-builder.Services.AddDbContext<RestaurantContext>(
-    (options) => { options.UseNpgsql(connectionString);}
-    );
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
