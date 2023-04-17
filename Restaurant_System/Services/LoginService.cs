@@ -1,4 +1,6 @@
-﻿namespace Services
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Services
 {
     [Serializable]
     public class LoginService

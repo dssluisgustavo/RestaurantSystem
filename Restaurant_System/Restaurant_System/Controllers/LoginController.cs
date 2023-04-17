@@ -1,10 +1,12 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Services.Interfaces;
 
 namespace Restaurant_System.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class LoginController : Controller
@@ -16,6 +18,7 @@ namespace Restaurant_System.Controllers
         }
         // (POST) método de login
         [HttpPost("/login")]
+        [AllowAnonymous]
         public IActionResult Login(Login login)
         {
             Login _login = loginService.Login(login);
@@ -24,6 +27,7 @@ namespace Restaurant_System.Controllers
             {
                 if (_login.password == null)
                 {
+                    // token
                     return Ok();
                 }
             }
