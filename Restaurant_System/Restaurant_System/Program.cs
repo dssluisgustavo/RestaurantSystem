@@ -1,7 +1,11 @@
+using Domain.Settings;
 using Microsoft.EntityFrameworkCore;
 using Services.Context;
+using System.Data.Common;
 
 var builder = WebApplication.CreateBuilder(args);
+
+DB_Settings.ConnectionString = Environment.GetEnvironmentVariable("DB_Restaurant");
 
 // Add services to the container.
 

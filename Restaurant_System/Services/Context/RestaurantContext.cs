@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -19,7 +20,7 @@ namespace Services.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("User Id=postgres;Password=yasuomonodedo;Server=db.oeilqxqiyuauqqyajmzt.supabase.co;Port=5432;Database=postgres");
+            optionsBuilder.UseNpgsql(DB_Settings.ConnectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
