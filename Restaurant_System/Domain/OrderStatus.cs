@@ -8,15 +8,11 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    [Table("Ingredients", Schema = "public")]
-    public class Ingredients
+    [Table("OderStatus", Schema = "public")]
+    public class OrderStatus
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Value { get; set; }
-        public bool IsActive { get; set; }
-
-        public virtual ICollection<DishesIngredients> DishesIngredients { get; } = new List<DishesIngredients>();
     }
 }

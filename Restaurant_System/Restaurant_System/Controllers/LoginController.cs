@@ -23,11 +23,12 @@ namespace Restaurant_System.Controllers
         {
             Login _login = loginService.Login(login);
 
-            if (_login.username == null)
+            // veritifica info do usuario
+            if (_login.Username == null)
             {
-                if (_login.password == null)
+                if (_login.Password == null)
                 {
-                    // token
+                    // se for true, gera o token
                     return Ok();
                 }
             }

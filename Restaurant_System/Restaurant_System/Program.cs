@@ -2,7 +2,9 @@ using Domain.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Services;
 using Services.Context;
+using Services.Interfaces;
 using System.Data.Common;
 using System.Text;
 
@@ -10,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 DB_Settings.ConnectionString = Environment.GetEnvironmentVariable("DB_Restaurant");
 JWT_Settings.Secret = Environment.GetEnvironmentVariable("JWT_Secret");
+
+builder.Services.AddTransient<IUserService,UserService>();
 
 // Add services to the container.
 
@@ -37,6 +41,7 @@ builder.Services.AddAuthentication(authentic =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<RestaurantContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

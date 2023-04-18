@@ -19,7 +19,7 @@ namespace Restaurant_System.Controllers
         [HttpGet("/dishes")]
         public IActionResult GetAll()
         {
-            Dishes allDishes = dishesService.GetAll();
+            List<Dishes> allDishes = dishesService.GetAll();
 
             if(allDishes == null)
             {

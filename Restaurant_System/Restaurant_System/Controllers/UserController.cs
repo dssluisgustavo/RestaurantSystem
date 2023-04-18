@@ -25,7 +25,7 @@ namespace Restaurant_System.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(user);
 
         }
 

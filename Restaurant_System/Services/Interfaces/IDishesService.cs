@@ -9,7 +9,7 @@ namespace Services.Interfaces
 {
     public interface IDishesService
     {
-        Dishes GetAll();
+        List<Dishes> GetAll();
         Dishes GetById(int id);
 
         Dishes CreateDish(Dishes dish);

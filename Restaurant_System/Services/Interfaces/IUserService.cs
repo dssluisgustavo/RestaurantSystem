@@ -11,6 +11,6 @@ namespace Services.Interfaces
     {
         User GetUserById(int id);
         User CreateAccount(User user);
-        User DeleteUser(string email);
+        User DeleteUser(string cpf);
     }
 }
