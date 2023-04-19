@@ -9,8 +9,8 @@ namespace Services.Interfaces
 {
     public interface ILoginService
     {
-        Login Login(Login login);
+        string Login(Login login);
 
-        void Logout();
+        void Logout(string token);
     }
 }

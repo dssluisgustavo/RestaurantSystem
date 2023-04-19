@@ -21,25 +21,23 @@ namespace Restaurant_System.Controllers
         [AllowAnonymous]
         public IActionResult Login(Login login)
         {
-            Login _login = loginService.Login(login);
+            string loginToken = loginService.Login(login);
 
             // veritifica info do usuario
-            if (_login.Username == null)
+            if (loginToken != null)
             {
-                if (_login.Password == null)
-                {
-                    // se for true, gera o token
-                    return Ok();
-                }
+                // se for true, gera o token
+                return Ok();
             }
             return BadRequest();
         }
 
         // (GET) método de logout
+        [Authorize]
         [HttpGet("/logout")]
-        public IActionResult Logout()
+        public IActionResult Logout(string userToken)
         {
-            loginService.Logout();
+            loginService.Logout(userToken);
 
             return Ok();
         }

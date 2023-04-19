@@ -29,7 +29,7 @@ namespace Restaurant_System.Controllers
 
         }
 
-        [HttpPost("/users")]
+        [HttpPost("/users/create")]
         public IActionResult SignUp(User user)
         {
             User newUser = userService.CreateAccount(user);
@@ -46,12 +46,11 @@ namespace Restaurant_System.Controllers
         {
             User deletedUser = userService.DeleteUser(email);
 
-
             if (deletedUser == null)
             {
-                return NotFound();
+                return NotFound("Usuário não encontrado!");
             }
-            return Ok();
+            return Ok("Usuário deletado!");
         }
     }
 }

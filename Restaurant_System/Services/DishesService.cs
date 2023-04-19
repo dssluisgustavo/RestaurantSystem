@@ -11,14 +11,22 @@ namespace Services
     [Serializable]
     public class DishesService : IDishesService
     {
-        //método que mostra a lista
-        //método que seleciona os itens da lista e gera a conta do usuário (recebe user logado)
         public Dishes CreateDish(Dishes dish)
         {
             Dishes newDish = new Dishes();
 
             newDish.Name = dish.Name;
             newDish.Value = dish.Value;
+
+            for ( int i = 0; i < newDish.DishesIngredients.Count(); i++)
+            {
+                Ingredients addIng = new Ingredients();
+
+                addIng.Id = i;
+
+
+
+            }
             //entra na bela de ingredients
             //adiciona os ingredients que quiser usando IngredientsDishes.Add()
 

@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
+using Services.Context;
 using Services.Interfaces;
 
 namespace Services
@@ -8,38 +9,40 @@ namespace Services
     [Serializable]
     public class LoginService : ILoginService
     {
-        /* método para efetuar login
-         * {
-         *  pega login e compara
-         *  pega senha e compara
-         *  }
-         *  */
-        
-        // método para efetuar logout
 
-        public Login Login(Login login)
+        private readonly RestaurantContext _contextRestaurant;
+        public LoginService(Context.RestaurantContext restaurantContext)
+        {
+            _contextRestaurant = restaurantContext;
+        }
+        public string Login(Login login)
         {
             //pega user no repository para comparar info com o login
-            //User user = repository (login.username)
+            User user = _contextRestaurant.Users.FirstOrDefault(userReq => userReq.Username == login.Username);
 
-            User user = new User(); // user ilustrativo
-
-            if(login == null
-             ||login.Username != user.Username 
-             ||login.Password != user.Password)
+            if (login == null)
+            {
+                return null;
+            }
+            if (user == null
+             || login.Password != user.Password)
             {
                 return null;
             }
 
             // gera token
-            // retorna token
+            TokenService token = new TokenService();
 
-            throw new NotImplementedException();
+            string newToken = token.GenerateToken(user);
+
+            // retorna token
+            return newToken;
         }
-        public void Logout()
+        public void Logout(string userToken)
         {
-            // User user = Repository
-            throw new NotImplementedException();
+
+            string deletedToken = userToken.Remove(1, 2);
+
         }
     }
 }
