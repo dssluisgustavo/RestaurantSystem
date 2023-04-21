@@ -9,7 +9,7 @@ namespace Domain.Settings
 {
     public static class HashMD5
     {
-        public static string GerarHashMd5(string input)
+        public static string ToMD5(this string input)
         {
             MD5 md5Hash = MD5.Create();
             // Converter a String para array de bytes, que é como a biblioteca trabalha.

@@ -14,6 +14,7 @@ DB_Settings.ConnectionString = Environment.GetEnvironmentVariable("DB_Restaurant
 JWT_Settings.Secret = Environment.GetEnvironmentVariable("JWT_Secret");
 
 builder.Services.AddTransient<IUserService,UserService>();
+builder.Services.AddTransient<ILoginService,LoginService>();
 
 // Add services to the container.
 

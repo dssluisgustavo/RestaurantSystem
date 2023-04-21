@@ -10,7 +10,5 @@ namespace Services.Interfaces
     public interface ILoginService
     {
         string Login(Login login);
-
-        void Logout(string token);
     }
 }

@@ -31,7 +31,7 @@ namespace Services
                 User newUser = new User();
 
                 newUser.Username = user.Username;
-                newUser.Password = HashMD5.GerarHashMd5(user.Password);
+                newUser.Password = user.Password.ToMD5();
                 newUser.Email = user.Email;
                 newUser.CPF = user.CPF;
                 newUser.IsAdmin = false;
@@ -46,14 +46,21 @@ namespace Services
             return null;
         }
 
-        public User DeleteUser(string email)
+        public bool DeleteUser(int id)
         {
             //entra no banco, na tabela User e deleta as infos do CPF digitado
-            User deletedUser = _contextRestaurant.Users.FirstOrDefault(delete => delete.Email == email);
+            User deletedUser = _contextRestaurant.Users.FirstOrDefault(user => user.Id == id);
+            
+            if(deletedUser != null)
+            {
+                deletedUser.IsActive = false;
 
-            _contextRestaurant.SaveChanges();
+                _contextRestaurant.SaveChanges();
 
-            return deletedUser;
+                return true;
+            }
+
+            return false; 
         }
 
         public User GetUserById(int id)
@@ -63,6 +70,21 @@ namespace Services
             User user = _contextRestaurant.Users.FirstOrDefault(user => user.Id == id);
 
             return user;
+        }
+
+        public User UpdateUser(int id, User user)
+        {
+            User updateUser = _contextRestaurant.Users.FirstOrDefault(_user => _user.Id == id);
+
+            if(updateUser == null)
+            {
+                return null;
+            }
+
+            updateUser.Username = user.Username;
+            updateUser.Email = user.Email;
+
+            return updateUser;
         }
     }
 }

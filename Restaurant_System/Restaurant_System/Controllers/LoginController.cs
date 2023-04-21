@@ -31,15 +31,5 @@ namespace Restaurant_System.Controllers
             }
             return BadRequest();
         }
-
-        // (GET) método de logout
-        [Authorize]
-        [HttpGet("/logout")]
-        public IActionResult Logout(string userToken)
-        {
-            loginService.Logout(userToken);
-
-            return Ok();
-        }
     }
 }

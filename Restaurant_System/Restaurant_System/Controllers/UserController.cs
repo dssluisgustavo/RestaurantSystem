@@ -26,10 +26,9 @@ namespace Restaurant_System.Controllers
                 return BadRequest();
             }
             return Ok(user);
-
         }
 
-        [HttpPost("/users/create")]
+        [HttpPost("/users")]
         public IActionResult SignUp(User user)
         {
             User newUser = userService.CreateAccount(user);
@@ -41,16 +40,28 @@ namespace Restaurant_System.Controllers
             return Created($"/user/{newUser}", newUser);
         }
 
-        [HttpDelete("/users/delete{id}")]
-        public IActionResult DeleteUser(string email)
+        [HttpDelete("/users/{id}")]
+        public IActionResult DeleteUser(int id)
         {
-            User deletedUser = userService.DeleteUser(email);
-
-            if (deletedUser == null)
+            bool deletedUser = userService.DeleteUser(id);
+            
+            if (deletedUser == false)
             {
                 return NotFound("Usuário não encontrado!");
             }
-            return Ok("Usuário deletado!");
+            return Ok($"Usuário deletado! {deletedUser}");
+        }
+
+        [HttpPut("/users/{id}")]
+        public IActionResult UpdateUser(int id, User user)
+        {
+            User update = userService.UpdateUser(id, user);
+
+            if(update == null)
+            {
+                return NotFound();
+            }
+            return Ok(update);
         }
     }
 }

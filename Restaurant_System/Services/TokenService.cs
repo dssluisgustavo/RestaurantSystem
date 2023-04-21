@@ -19,13 +19,13 @@ namespace Services
             JwtSecurityTokenHandler jwtTokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(JWT_Settings.Secret);
 
-            var tokenDescriptor = new SecurityTokenDescriptor()
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Expires = DateTime.UtcNow.AddDays(1),
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Username),
-                    new Claim(ClaimTypes.Role, user.UserRoles.First().Role.Name)
+                   //new Claim(ClaimTypes.Role, user.UserRoles.First().Role.Name)
                 }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

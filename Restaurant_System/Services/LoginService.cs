@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using Services.Context;
@@ -18,14 +19,14 @@ namespace Services
         public string Login(Login login)
         {
             //pega user no repository para comparar info com o login
-            User user = _contextRestaurant.Users.FirstOrDefault(userReq => userReq.Username == login.Username);
+            User user = _contextRestaurant.Users.FirstOrDefault(user => user.Username == login.Username);
 
             if (login == null)
             {
                 return null;
             }
             if (user == null
-             || login.Password != user.Password)
+             || login.Password.ToMD5() != user.Password)
             {
                 return null;
             }
@@ -37,12 +38,6 @@ namespace Services
 
             // retorna token
             return newToken;
-        }
-        public void Logout(string userToken)
-        {
-
-            string deletedToken = userToken.Remove(1, 2);
-
         }
     }
 }
