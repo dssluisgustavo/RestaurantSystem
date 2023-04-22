@@ -27,7 +27,7 @@ namespace Restaurant_System.Controllers
             if (loginToken != null)
             {
                 // se for true, gera o token
-                return Ok();
+                return Ok(loginToken);
             }
             return BadRequest();
         }
