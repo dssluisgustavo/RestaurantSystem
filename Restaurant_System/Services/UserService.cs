@@ -1,16 +1,7 @@
 ﻿using Domain;
 using Domain.Settings;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Services.Context;
 using Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
@@ -28,9 +19,6 @@ namespace Services
         {
             if (user.Username.Length.IsBetween(4, 10) && user.Password.Length.IsBetween(8, 16))
             {
-                UserRoles userRoles = new UserRoles();
-                userRoles.RoleId = 2;
-
                 User newUser = new User();
 
                 newUser.Username = user.Username;
@@ -39,7 +27,6 @@ namespace Services
                 newUser.CPF = user.CPF;
                 newUser.IsAdmin = false;
                 newUser.IsActive = true;
-                newUser.UserRoles.Add(userRoles);
 
                 _contextRestaurant.Users.Add(newUser);
                 _contextRestaurant.SaveChanges();

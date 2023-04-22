@@ -2,6 +2,7 @@
 using Domain.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
+using Microsoft.EntityFrameworkCore;
 using Services.Context;
 using Services.Interfaces;
 

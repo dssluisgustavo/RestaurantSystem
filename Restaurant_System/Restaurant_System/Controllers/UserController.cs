@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -15,7 +16,8 @@ namespace Restaurant_System.Controllers
         {
             userService = userServiceInterface;
         }
-        // (INSERT) create account
+
+        [Authorize]
         [HttpGet("/users/{id}")]
         public IActionResult GetById(int id)
         {

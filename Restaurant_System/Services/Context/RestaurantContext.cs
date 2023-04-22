@@ -13,7 +13,6 @@ namespace Services.Context
     public class RestaurantContext : DbContext
     {
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Dishes > Dishes { get; set; }
         public virtual DbSet<Ingredients> Ingredients { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
@@ -21,7 +20,6 @@ namespace Services.Context
 
         public virtual DbSet<DishesIngredients> DishesIngredients { get; set; }
         public virtual DbSet<OrderDishes> OrderDishes { get; set; }
-        public virtual DbSet<UserRoles> UserRoles { get; set; }
         public RestaurantContext() : base() { }
         public RestaurantContext(DbContextOptions<RestaurantContext> options) : base(options) { }
 
@@ -32,13 +30,6 @@ namespace Services.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<UserRoles>(userRoles =>
-            {
-                userRoles.HasKey(us => new {us.UserId, us.RoleId});
-                userRoles.HasOne(us => us.User).WithMany(us => us.UserRoles).HasForeignKey(us => us.UserId);
-                userRoles.HasOne(us => us.Role).WithMany(us => us.UserRoles).HasForeignKey(us => us.RoleId);
-            });
 
             modelBuilder.Entity<DishesIngredients>(dishesIng =>
             {
