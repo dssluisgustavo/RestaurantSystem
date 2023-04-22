@@ -20,10 +20,7 @@ namespace Services
         public string Login(Login login)
         {
             //pega user no repository para comparar info com o login
-            User user = _contextRestaurant.Users
-                .Include(u => u.UserRoles)
-                .ThenInclude(u => u.Role)
-                .FirstOrDefault(user => user.Username == login.Username);
+            User user = _contextRestaurant.Users.FirstOrDefault(user => user.Username == login.Username);
 
             if (login == null)
             {

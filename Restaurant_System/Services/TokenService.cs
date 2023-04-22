@@ -27,7 +27,6 @@ namespace Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Username),
-                    new Claim(ClaimTypes.Role, user.UserRoles.Count > 0 ? user.UserRoles.First().Role.Name : ""),
                     new Claim("isAdmin", user.IsAdmin.ToString())
                 }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
