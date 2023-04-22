@@ -1,19 +1,21 @@
 ﻿using Domain;
 using Domain.Settings;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
     public class TokenService
     {
+        public JwtSecurityToken ReadToken(string jwtToken)
+        {
+            JwtSecurityTokenHandler jwtTokenHandler = new JwtSecurityTokenHandler();
+            var token = jwtTokenHandler.ReadJwtToken(jwtToken);
+            return token as JwtSecurityToken;
+        }
+
         public string GenerateToken(User user)
         {
             JwtSecurityTokenHandler jwtTokenHandler = new JwtSecurityTokenHandler();
@@ -26,6 +28,7 @@ namespace Services
                 {
                     new Claim(ClaimTypes.Name, user.Username),
                     new Claim(ClaimTypes.Role, user.UserRoles.Count > 0 ? user.UserRoles.First().Role.Name : ""),
+                    new Claim("isAdmin", user.IsAdmin.ToString())
                 }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

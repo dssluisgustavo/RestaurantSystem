@@ -70,6 +70,7 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 builder.Services.AddDbContext<RestaurantContext>();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
