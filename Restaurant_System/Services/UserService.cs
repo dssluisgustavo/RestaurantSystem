@@ -28,6 +28,9 @@ namespace Services
         {
             if (user.Username.Length.IsBetween(4, 10) && user.Password.Length.IsBetween(8, 16))
             {
+                UserRoles userRoles = new UserRoles();
+                userRoles.RoleId = 2;
+
                 User newUser = new User();
 
                 newUser.Username = user.Username;
@@ -36,6 +39,7 @@ namespace Services
                 newUser.CPF = user.CPF;
                 newUser.IsAdmin = false;
                 newUser.IsActive = true;
+                newUser.UserRoles.Add(userRoles);
 
                 _contextRestaurant.Users.Add(newUser);
                 _contextRestaurant.SaveChanges();

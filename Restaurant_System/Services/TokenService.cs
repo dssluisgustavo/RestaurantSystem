@@ -25,7 +25,7 @@ namespace Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Username),
-                   //new Claim(ClaimTypes.Role, user.UserRoles.First().Role.Name)
+                    new Claim(ClaimTypes.Role, user.UserRoles != user.UserRoles.DefaultIfEmpty()? user.UserRoles.First().Role.Name : " "),
                 }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
