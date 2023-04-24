@@ -1,10 +1,12 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Services.Interfaces;
 
 namespace Restaurant_System.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class LoginController : Controller
@@ -16,27 +18,18 @@ namespace Restaurant_System.Controllers
         }
         // (POST) método de login
         [HttpPost("/login")]
+        [AllowAnonymous]
         public IActionResult Login(Login login)
         {
-            Login _login = loginService.Login(login);
+            string loginToken = loginService.Login(login);
 
-            if (_login.username == null)
+            // veritifica info do usuario
+            if (loginToken != null)
             {
-                if (_login.password == null)
-                {
-                    return Ok();
-                }
+                // se for true, gera o token
+                return Ok(loginToken);
             }
             return BadRequest();
-        }
-
-        // (GET) método de logout
-        [HttpGet("/logout")]
-        public IActionResult Logout()
-        {
-            loginService.Logout();
-
-            return Ok();
         }
     }
 }

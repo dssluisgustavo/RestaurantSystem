@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -15,7 +16,8 @@ namespace Restaurant_System.Controllers
         {
             userService = userServiceInterface;
         }
-        // (INSERT) create account
+
+        [Authorize]
         [HttpGet("/users/{id}")]
         public IActionResult GetById(int id)
         {
@@ -25,8 +27,7 @@ namespace Restaurant_System.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
-
+            return Ok(user);
         }
 
         [HttpPost("/users")]
@@ -41,17 +42,28 @@ namespace Restaurant_System.Controllers
             return Created($"/user/{newUser}", newUser);
         }
 
-        [HttpDelete("/users/delete{id}")]
-        public IActionResult DeleteUser(string email)
+        [HttpDelete("/users/{id}")]
+        public IActionResult DeleteUser(int id)
         {
-            User deletedUser = userService.DeleteUser(email);
+            bool deletedUser = userService.DeleteUser(id);
+            
+            if (deletedUser == false)
+            {
+                return NotFound("Usuário não encontrado!");
+            }
+            return Ok($"Usuário deletado! {deletedUser}");
+        }
 
+        [HttpPut("/users/{id}")]
+        public IActionResult UpdateUser(int id, User user)
+        {
+            User update = userService.UpdateUser(id, user);
 
-            if (deletedUser == null)
+            if(update == null)
             {
                 return NotFound();
             }
-            return Ok();
+            return Ok(update);
         }
     }
 }

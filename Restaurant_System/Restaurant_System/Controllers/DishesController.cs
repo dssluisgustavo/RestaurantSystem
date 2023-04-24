@@ -19,7 +19,7 @@ namespace Restaurant_System.Controllers
         [HttpGet("/dishes")]
         public IActionResult GetAll()
         {
-            Dishes allDishes = dishesService.GetAll();
+            List<Dishes> allDishes = dishesService.GetAll();
 
             if(allDishes == null)
             {
@@ -41,7 +41,7 @@ namespace Restaurant_System.Controllers
             return Ok();
         }
 
-        [HttpPost("/dishes/create")]
+        [HttpPost("/dishes")]
         public IActionResult CreateDishes(Dishes dishes)
         {
             Dishes newDish = dishesService.CreateDish(dishes);
@@ -53,7 +53,7 @@ namespace Restaurant_System.Controllers
             return Created($"/user/{newDish}", newDish);
         }
 
-        [HttpPut ("/dishes/update{id}")]
+        [HttpPut ("/dishes/{id}")]
         public IActionResult UpdateDish(Dishes dishes)
         {
             Dishes updateDish = dishesService.UpdateDish(dishes);
@@ -65,7 +65,7 @@ namespace Restaurant_System.Controllers
             return Ok();
         }
 
-        [HttpDelete("/dishes/delete{id}")]
+        [HttpDelete("/dishes/{id}")]
 
         public IActionResult DeleteDish(int id)
         {

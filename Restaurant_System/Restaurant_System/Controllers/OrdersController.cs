@@ -39,7 +39,7 @@ namespace Restaurant_System.Controllers
             return Ok();
         }
 
-        [HttpPost ("/orders/create")]
+        [HttpPost ("/orders")]
         public IActionResult CreateOrder(Order order)
         {
             Order newOrder = ordersService.CreateOrder(order);
@@ -51,7 +51,7 @@ namespace Restaurant_System.Controllers
             return Ok();
         }
 
-        [HttpPut("/orders/update{id}")]
+        [HttpPut("/orders/{id}")]
         public IActionResult UpdateOrder(int id)
         {
             Order updateOrder = ordersService.UpdateOrder(id);
