@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,8 @@ namespace Services.Interfaces
     {
         List<Dishes> GetAll();
         Dishes GetById(int id);
-
-        Dishes CreateDish(Dishes dish);
-        Dishes UpdateDish(Dishes dish);
-        Dishes DeleteDish(int id);
+        Dishes CreateDish(DishCreationDTO newDish);
+        Dishes UpdateDish(int id, DishCreationDTO updateDish);
+        bool DeleteDish(int id);
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
 namespace Restaurant_System.Controllers
 {
+    [AdminAuth]
     [ApiController]
     [Route("[controller]")]
     public class OrdersController : Controller
@@ -15,6 +17,7 @@ namespace Restaurant_System.Controllers
         }
 
         // (GET) estado do pedido
+        [AllowAnonymous]
         [HttpGet("/orders")]
         public IActionResult GetAll()
         {
@@ -36,7 +39,7 @@ namespace Restaurant_System.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(orderById);
         }
 
         [HttpPost ("/orders")]
@@ -48,7 +51,7 @@ namespace Restaurant_System.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok($"/orders/{newOrder}");
         }
 
         [HttpPut("/orders/{id}")]
@@ -60,9 +63,10 @@ namespace Restaurant_System.Controllers
             {
                 return NotFound();
             }
-            return Ok();
+            return Ok(updateOrder);
         }
 
+        [AllowAnonymous]
         [HttpPut("/orders/status{id}")]
         public IActionResult OderStatus(int id)
         {
@@ -72,7 +76,7 @@ namespace Restaurant_System.Controllers
             {
                 return NotFound();
             }
-            return Ok();
+            return Ok(orderStatus);
         }
     }
 }

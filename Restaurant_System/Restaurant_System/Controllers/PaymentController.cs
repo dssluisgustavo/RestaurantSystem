@@ -1,9 +1,11 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
 namespace Restaurant_System.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class PaymentController : Controller

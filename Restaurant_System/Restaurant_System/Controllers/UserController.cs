@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Services.Interfaces;
+using Domain.Settings;
 
 namespace Restaurant_System.Controllers
 {
@@ -17,7 +18,7 @@ namespace Restaurant_System.Controllers
             userService = userServiceInterface;
         }
 
-        [Authorize]
+        [AdminAuth]
         [HttpGet("/users/{id}")]
         public IActionResult GetById(int id)
         {
@@ -30,6 +31,7 @@ namespace Restaurant_System.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpPost("/users")]
         public IActionResult SignUp(User user)
         {
@@ -42,6 +44,7 @@ namespace Restaurant_System.Controllers
             return Created($"/user/{newUser}", newUser);
         }
 
+        [AdminAuth]
         [HttpDelete("/users/{id}")]
         public IActionResult DeleteUser(int id)
         {
@@ -54,6 +57,7 @@ namespace Restaurant_System.Controllers
             return Ok($"Usuário deletado! {deletedUser}");
         }
 
+        [AdminAuth]
         [HttpPut("/users/{id}")]
         public IActionResult UpdateUser(int id, User user)
         {

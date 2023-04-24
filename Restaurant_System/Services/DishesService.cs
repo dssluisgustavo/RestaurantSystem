@@ -1,8 +1,13 @@
 ﻿using Domain;
+using Domain.DTO;
+using Domain.Settings;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Services.Context;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,91 +16,93 @@ namespace Services
     [Serializable]
     public class DishesService : IDishesService
     {
-        public Dishes CreateDish(Dishes dish)
+        private readonly RestaurantContext _contextRestaurant;
+        public DishesService(Context.RestaurantContext restaurantContext)
         {
-            Dishes newDish = new Dishes();
-
-            newDish.Name = dish.Name;
-            newDish.Value = dish.Value;
-
-            for ( int i = 0; i < newDish.DishesIngredients.Count(); i++)
+            _contextRestaurant = restaurantContext;
+        }
+        public Dishes CreateDish(DishCreationDTO dish)
+        {
+            if (dish.Ingredients.Count() != 0)
             {
-                Ingredients addIng = new Ingredients();
+                Dishes newDish = new Dishes();
 
-                addIng.Id = i;
+                newDish.Name = dish.Name;
+                newDish.IsActive = true;
 
+                List<Ingredients> ingredientsList = _contextRestaurant.Ingredients.Where(ing => dish.Ingredients.Contains(ing.Id)).ToList();
 
+                foreach (var item in ingredientsList)
+                {
+                    DishesIngredients relationship = new DishesIngredients();
 
+                    relationship.IngredientId = item.Id;
+
+                    newDish.DishesIngredients.Add(relationship);
+
+                    newDish.Value = 1.5 + item.Value;
+                }
+
+                _contextRestaurant.Dishes.Add(newDish);
+                _contextRestaurant.SaveChanges();
+
+                return newDish;
             }
-            //entra na bela de ingredients
-            //adiciona os ingredients que quiser usando IngredientsDishes.Add()
 
-
-            throw new NotImplementedException();
+            return null;
         }
 
-        public Dishes DeleteDish(int id)
+        public bool DeleteDish(int id)
         {
-            // Dish deleted = repository(id)
+            Dishes deletedDish = _contextRestaurant.Dishes.FirstOrDefault(dish => dish.Id == id);
 
-            //objeto ilustrativo
-            Dishes deleted = new Dishes();
-            deleted.IsActive = false;
-            //salva no banco
+            if (deletedDish == null)
+            {
+                return false;
+            }
 
-            throw new NotImplementedException();
+            deletedDish.IsActive = false;
+
+            _contextRestaurant.SaveChanges();
+
+            return true;
         }
 
         public List<Dishes> GetAll()
         {
-            // List<Dishes> dishesList = repository
+            List<Dishes> dishesList = _contextRestaurant.Dishes.Where(dish => dish.IsActive == true).ToList();
 
-            //lista ilustrativa
-            List<Dishes> dishesList = new List<Dishes>();
-
-            foreach (Dishes dish in dishesList)
-            {
-                Dishes getDishes = new Dishes();
-
-                getDishes.Name = dish.Name;
-                getDishes.Value = dish.Value;
-
-                dishesList.Add(getDishes);
-
-            }
             return dishesList;
         }
 
         public Dishes GetById(int id)
         {
-            //Dishes dish = repository(id)
-
-            //objeto ilustrativo
-            Dishes dish = new Dishes();
-
-            Dishes getDish = new Dishes();
-
-            getDish.Id = dish.Id;
-            getDish.Name= dish.Name;
-            getDish.Value = dish.Value;
-
-            //traz lista de ingredients
+            Dishes getDish = _contextRestaurant.Dishes.FirstOrDefault(dish => dish.Id == id);
 
             return getDish;
         }
 
-        public Dishes UpdateDish(Dishes newDish)
+        public Dishes UpdateDish(int id, DishCreationDTO dish)
         {
-            //Dishes newDish = repository
-            Dishes dish = new Dishes();
+            Dishes updateDish = _contextRestaurant.Dishes.FirstOrDefault(dish => dish.Id == id);
 
-            dish.Name = newDish.Name;
-            dish.Value = newDish.Value;
-            //adiciona novos ingredients a lista DishIngredents
+            if (updateDish != null)
+            {
+                updateDish.Name = dish.Name;
 
-            //salva Dish no repository
+                List<Ingredients> ingredientsList = _contextRestaurant.Ingredients.Where(ing => dish.Ingredients.Contains(ing.Id)).ToList();
 
-            throw new NotImplementedException();
+                foreach(var item in ingredientsList)
+                {
+                    updateDish.Value = 1.5 + item.Value;
+                }
+
+                _contextRestaurant.SaveChanges();
+
+                return updateDish;
+            }
+
+            return null;
         }
     }
 }

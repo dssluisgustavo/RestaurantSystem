@@ -1,9 +1,12 @@
 ﻿using Domain;
+using Domain.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
 namespace Restaurant_System.Controllers
 {
+    [AdminAuth]
     [ApiController]
     [Route("[controller]")]
     public class DishesController : Controller
@@ -16,16 +19,17 @@ namespace Restaurant_System.Controllers
         }
 
         // (GET) método get all
+        [AllowAnonymous]
         [HttpGet("/dishes")]
         public IActionResult GetAll()
         {
             List<Dishes> allDishes = dishesService.GetAll();
 
-            if(allDishes == null)
+            if (allDishes == null)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(allDishes);
         }
 
         // (GET) método getbyid
@@ -34,48 +38,47 @@ namespace Restaurant_System.Controllers
         {
             Dishes dishById = dishesService.GetById(id);
 
-            if(dishById == null)
+            if (dishById == null)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(dishById);
         }
-
+        [AllowAnonymous]
         [HttpPost("/dishes")]
-        public IActionResult CreateDishes(Dishes dishes)
+        public IActionResult CreateDishes(DishCreationDTO creationDish)
         {
-            Dishes newDish = dishesService.CreateDish(dishes);
+            Dishes newDish = dishesService.CreateDish(creationDish);
 
-            if(newDish == null)
+            if (newDish == null)
             {
                 return BadRequest();
             }
-            return Created($"/user/{newDish}", newDish);
+            return Created($"/dishes/{newDish}", newDish);
         }
 
-        [HttpPut ("/dishes/{id}")]
-        public IActionResult UpdateDish(Dishes dishes)
+        [HttpPut("/dishes/{id}")]
+        public IActionResult UpdateDish(int id, DishCreationDTO dish)
         {
-            Dishes updateDish = dishesService.UpdateDish(dishes);
+            Dishes updateDish = dishesService.UpdateDish(id, dish);
 
-            if(updateDish == null)
+            if (updateDish == null)
             {
                 return NotFound();
             }
-            return Ok();
+            return Ok(updateDish);
         }
 
         [HttpDelete("/dishes/{id}")]
-
         public IActionResult DeleteDish(int id)
         {
-            Dishes deletedDish = dishesService.DeleteDish(id);
+            bool deletedDish = dishesService.DeleteDish(id);
 
-            if(deletedDish == null)
+            if (deletedDish == null)
             {
                 return NotFound();
             }
-            return Ok();
+            return Ok($"Prato deletado! {deletedDish}");
         }
     }
 }

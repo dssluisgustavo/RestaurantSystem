@@ -17,6 +17,7 @@ JWT_Settings.Secret = Environment.GetEnvironmentVariable("JWT_Secret");
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
+builder.Services.AddTransient<IDishesService, DishesService>();
 
 // Add services to the container.
 
