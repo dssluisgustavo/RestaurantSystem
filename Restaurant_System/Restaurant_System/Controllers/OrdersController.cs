@@ -17,7 +17,7 @@ namespace Restaurant_System.Controllers
         }
 
         // (GET) estado do pedido
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("/orders")]
         public IActionResult GetAll()
         {

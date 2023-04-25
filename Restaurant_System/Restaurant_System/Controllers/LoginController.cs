@@ -6,7 +6,6 @@ using Services.Interfaces;
 
 namespace Restaurant_System.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class LoginController : Controller
@@ -16,9 +15,8 @@ namespace Restaurant_System.Controllers
         {
             loginService = loginServiceInterface;
         }
-        // (POST) método de login
+
         [HttpPost("/login")]
-        [AllowAnonymous]
         public IActionResult Login(Login login)
         {
             string loginToken = loginService.Login(login);

@@ -46,7 +46,7 @@ namespace Restaurant_System.Controllers
         }
         [AllowAnonymous]
         [HttpPost("/dishes")]
-        public IActionResult CreateDishes(DishCreationDTO creationDish)
+        public IActionResult CreateDishes(DishDTO creationDish)
         {
             Dishes newDish = dishesService.CreateDish(creationDish);
 
@@ -58,7 +58,7 @@ namespace Restaurant_System.Controllers
         }
 
         [HttpPut("/dishes/{id}")]
-        public IActionResult UpdateDish(int id, DishCreationDTO dish)
+        public IActionResult UpdateDish(int id, DishDTO dish)
         {
             Dishes updateDish = dishesService.UpdateDish(id, dish);
 

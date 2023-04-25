@@ -12,8 +12,8 @@ namespace Services.Interfaces
     {
         List<Dishes> GetAll();
         Dishes GetById(int id);
-        Dishes CreateDish(DishCreationDTO newDish);
-        Dishes UpdateDish(int id, DishCreationDTO updateDish);
+        Dishes CreateDish(DishDTO newDish);
+        Dishes UpdateDish(int id, DishDTO updateDish);
         bool DeleteDish(int id);
     }
 }

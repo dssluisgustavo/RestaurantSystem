@@ -21,7 +21,7 @@ namespace Services
         {
             _contextRestaurant = restaurantContext;
         }
-        public Dishes CreateDish(DishCreationDTO dish)
+        public Dishes CreateDish(DishDTO dish)
         {
             if (dish.Ingredients.Count() != 0)
             {
@@ -82,7 +82,7 @@ namespace Services
             return getDish;
         }
 
-        public Dishes UpdateDish(int id, DishCreationDTO dish)
+        public Dishes UpdateDish(int id, DishDTO dish)
         {
             Dishes updateDish = _contextRestaurant.Dishes.FirstOrDefault(dish => dish.Id == id);
 
