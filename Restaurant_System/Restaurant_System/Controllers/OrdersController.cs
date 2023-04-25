@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
@@ -21,13 +22,13 @@ namespace Restaurant_System.Controllers
         [HttpGet("/orders")]
         public IActionResult GetAll()
         {
-            Order allOrders = ordersService.GetAll();
+            List<Order> allOrders = ordersService.GetAll();
 
             if (allOrders == null)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(allOrders);
         }
 
         [HttpGet("/orders/{id}")]
@@ -43,7 +44,7 @@ namespace Restaurant_System.Controllers
         }
 
         [HttpPost ("/orders")]
-        public IActionResult CreateOrder(Order order)
+        public IActionResult CreateOrder(OrderDTO order)
         {
             Order newOrder = ordersService.CreateOrder(order);
 
@@ -55,9 +56,9 @@ namespace Restaurant_System.Controllers
         }
 
         [HttpPut("/orders/{id}")]
-        public IActionResult UpdateOrder(int id)
+        public IActionResult UpdateOrder(int id, OrderDTO order)
         {
-            Order updateOrder = ordersService.UpdateOrder(id);
+            Order updateOrder = ordersService.UpdateOrder(id, order);
 
             if(updateOrder == null)
             {
@@ -68,9 +69,9 @@ namespace Restaurant_System.Controllers
 
         [AllowAnonymous]
         [HttpPut("/orders/status{id}")]
-        public IActionResult OderStatus(int id)
+        public IActionResult OderStatus(int id, OrderDTO order)
         {
-            Order orderStatus = ordersService.UpdateOrderStatus(id);
+            Order orderStatus = ordersService.UpdateOrderStatus(id, order);
 
             if(orderStatus == null)
             {

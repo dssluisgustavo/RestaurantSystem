@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Services.Interfaces
 {
     public interface IOrdersService
     {
-        Order GetAll();
+        List<Order> GetAll();
         Order GetById(int id);
 
-        Order CreateOrder(Order order);
-        Order UpdateOrder(int id);
-        Order UpdateOrderStatus(int id);
+        Order CreateOrder(OrderDTO order);
+        Order UpdateOrder(int id, OrderDTO order);
+        Order UpdateOrderStatus(int id, OrderDTO order);
     }
 }

@@ -19,6 +19,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddTransient<IDishesService, DishesService>();
 builder.Services.AddTransient<IIngredientService, IngredientsService>();
+builder.Services.AddTransient<IOrdersService, OrdersService>();
 
 // Add services to the container.
 

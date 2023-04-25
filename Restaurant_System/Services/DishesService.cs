@@ -23,7 +23,7 @@ namespace Services
         }
         public Dishes CreateDish(DishDTO dish)
         {
-            if (dish.Ingredients.Count() != 0)
+            if (dish.Name.Length.IsBetween(3, 30) && dish.Ingredients.Count() != 0)
             {
                 Dishes newDish = new Dishes();
 

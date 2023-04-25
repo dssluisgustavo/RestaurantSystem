@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.DTO
 {
-    public class IngredientDTO
+    public class OrderDTO
     {
-        public string Name { get; set; }
-        public double Value { get; set; }
+        public int UserId { get; set; }
+        public List<int> Dishes { get; set; }
+        public int Status { get; set; }
     }
 }
