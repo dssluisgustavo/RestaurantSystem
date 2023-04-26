@@ -64,18 +64,26 @@ namespace Services
             return getOrder;
         }
 
-        public Order UpdateOrder(int id, OrderDTO order)
+        public Order UpdateOrder(int id, OrderDTO orderedDishes)
         {
-            //os pratos já salvos devem permanecer, coisa q não está acontecendo
             Order updateOrder = _contextRestaurant.Orders.FirstOrDefault(order => order.Id == id);
 
-            if(updateOrder != null)
+            if (updateOrder != null)
             {
-                List<Dishes> dishesList = _contextRestaurant.Dishes.Where(dish => order.Dishes.Contains(dish.Id)).ToList();
-
-                foreach (var item in dishesList)
+                for ( int i =0; i < orderedDishes.OrderedDishes.Count; i++)
                 {
-                    updateOrder.Value += item.Value;
+                    List<Dishes> getDishes = _contextRestaurant.Dishes.Where(getDishes => orderedDishes.Dishes.Contains(getDishes.Id)).ToList();
+
+                    foreach (var element in getDishes)
+                    {
+                        OrderDishes relationship = new OrderDishes();
+
+                        relationship.DishId = element.Id;
+
+                        updateOrder.OrderDishes.Add(relationship);
+
+                        updateOrder.Value += element.Value;
+                    }
                 }
                 _contextRestaurant.SaveChanges();
 

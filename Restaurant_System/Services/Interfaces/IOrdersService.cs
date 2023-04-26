@@ -14,7 +14,7 @@ namespace Services.Interfaces
         Order GetById(int id);
 
         Order CreateOrder(OrderDTO order);
-        Order UpdateOrder(int id, OrderDTO order);
+        Order UpdateOrder(int id, OrderDTO ordersId);
         Order UpdateOrderStatus(int id, OrderDTO order);
     }
 }

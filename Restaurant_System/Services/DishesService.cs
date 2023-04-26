@@ -90,11 +90,19 @@ namespace Services
             {
                 updateDish.Name = dish.Name;
 
-                List<Ingredients> ingredientsList = _contextRestaurant.Ingredients.Where(ing => dish.Ingredients.Contains(ing.Id)).ToList();
-
-                foreach(var item in ingredientsList)
+                for(int i = 0; i< dish.Ingredients.Count(); i++)
                 {
-                    updateDish.Value = 1.5 + item.Value;
+                    List<Ingredients> ingredientsList = _contextRestaurant.Ingredients.Where(getIng => dish.Ingredients.Contains(getIng.Id)).ToList();
+
+                    foreach (var item in ingredientsList)
+                    {
+                        DishesIngredients relatioship = new DishesIngredients();
+
+                        relatioship.IngredientId = item.Id;
+
+                        updateDish.DishesIngredients.Add(relatioship);
+                        updateDish.Value = 1.5 + item.Value;
+                    }
                 }
 
                 _contextRestaurant.SaveChanges();

@@ -10,6 +10,7 @@ namespace Domain.DTO
     {
         public int UserId { get; set; }
         public List<int> Dishes { get; set; }
+        public List<int> OrderedDishes { get; set; }
         public int Status { get; set; }
     }
 }

@@ -55,10 +55,10 @@ namespace Restaurant_System.Controllers
             return Ok($"/orders/{newOrder}");
         }
 
-        [HttpPut("/orders/{id}")]
-        public IActionResult UpdateOrder(int id, OrderDTO order)
+        [HttpPut("/orders/{id}/dishes")]
+        public IActionResult UpdateOrder(int id, OrderDTO orderedDishes)
         {
-            Order updateOrder = ordersService.UpdateOrder(id, order);
+            Order updateOrder = ordersService.UpdateOrder(id, orderedDishes);
 
             if(updateOrder == null)
             {
@@ -69,7 +69,7 @@ namespace Restaurant_System.Controllers
 
         [AllowAnonymous]
         [HttpPut("/orders/status{id}")]
-        public IActionResult OderStatus(int id, OrderDTO order)
+        public IActionResult OrderStatus(int id, OrderDTO order)
         {
             Order orderStatus = ordersService.UpdateOrderStatus(id, order);
 

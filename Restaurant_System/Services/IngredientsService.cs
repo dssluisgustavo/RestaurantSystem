@@ -46,7 +46,7 @@ namespace Services
 
         public Ingredients GetById(int id)
         {
-            Ingredients ingredient = _contextRestaurant.Ingredients.FirstOrDefault(ingredient => ingredient.Id == id);
+            Ingredients ingredient = _contextRestaurant.Ingredients.FirstOrDefault(ingredient => ingredient.Id == id && ingredient.IsActive == true);
 
             return ingredient;
         }
